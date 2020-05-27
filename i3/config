@@ -106,7 +106,7 @@ bindsym $mod+a focus parent
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1"
-set $ws2 "2 "
+set $ws2 "2"
 set $ws3 "3"
 set $ws4 "4"
 set $ws5 "5"
@@ -188,11 +188,67 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 
-set $bg-color 	         #2f343f
-set $inactive-bg-color   #2f343f
+set $bg-color 	         #1f1f1f
+set $inactive-bg-color   #1f1f1f
 set $text-color          #f3f4f5
-set $inactive-text-color #676E7D
+set $inactive-text-color #a9abb0
 set $urgent-bg-color     #E53935
+
+#disable window titlebars
+for_window [class="^.*"] border pixel 0
+# Set inner/outer gaps
+gaps inner 15
+gaps outer 15
+
+# Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
+# gaps inner|outer current|all set|plus|minus <px>
+# gaps inner all set 10
+# gaps outer all plus 5
+
+# Smart gaps (gaps used if only more than one container on the workspace)
+# smart_gaps on
+
+# Smart borders (draw borders around container only if it is not the only container on this workspace)
+# on|no_gaps (on=always activate and no_gaps=only activate if the gap size to the edge of the screen is 0)
+smart_borders on
+
+# Press $mod+Shift+g to enter the gap mode. Choose o or i for modifying outer/inner gaps. Press one of + / - (in-/decrement for current workspace) or 0 (remove gaps for current workspace). If you also press Shift with these keys, the change will be global for all workspaces.
+set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+bindsym $mod+Shift+g mode "$mode_gaps"
+
+mode "$mode_gaps" {
+        bindsym o      mode "$mode_gaps_outer"
+        bindsym i      mode "$mode_gaps_inner"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 5
+        bindsym minus gaps inner current minus 5
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 5
+        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 5
+        bindsym minus gaps outer current minus 5
+        bindsym 0     gaps outer current set 0
+
+        bindsym Shift+plus  gaps outer all plus 5
+        bindsym Shift+minus gaps outer all minus 5
+        bindsym Shift+0     gaps outer all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
 
 # window colors
 #                       border              background         text                 indicator
@@ -207,18 +263,18 @@ hide_edge_borders both
 # finds out, if available)
 
 
-
 bindsym $mod+shift+x exec i3lock
 
 
-exec_always feh --bg-scale /home/atis/Dokumenti/trees.jpg
+exec_always feh --bg-scale /home/atis/wallpapers/kw.jpg
 exec_always compton -f
+
+bindsym  $mod+shift+s exec ./.config/polybar/scripts/sysmenu
 
 exec_always xrandr --output eDP-1-1 --off --output HDMI-1-1 --primary --mode 1920x1080 --pos 0x0 --rotate normal normal  
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
-exec "setxkbmap -layout lv"
+exec_always "setxkbmap -layout lv"
 
-#Controls screen brightness
-bindsym XF86MonBrightnessUp exec light -A 5% # increase screen brightness
-bindsym XF86MonBrightnessDown exec light -U 5% # decrease screen brightness
+exec xscreensaver
+bindsym --release Print exec scrot -s
