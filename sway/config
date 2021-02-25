@@ -15,7 +15,8 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term alacritty
+set $term alacritty -e fish
+
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -27,7 +28,6 @@ set $menu wofi --show drun
 output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 #
 # display configuration:
-
 output eDP-1 resolution 1920x1080 position 0 0
 output HDMI-A-1 resolution 1920x1080 position 1920,0
 #
@@ -47,6 +47,17 @@ output HDMI-A-1 resolution 1920x1080 position 1920,0
 # resumed. It will also lock your screen before your computer goes to sleep.
 
 ### Input configuration
+
+# Disables mouse acceleration
+input * accel_profile flat
+
+# Changes the default keyboard layout to latvian with the apostrophe modifier key
+
+input * {
+	xkb_layout "lv"
+	xkb_variant "apostrophe"
+} 
+
 #
 # Touchpad configuration:
 #
@@ -59,6 +70,15 @@ output HDMI-A-1 resolution 1920x1080 position 1920,0
 #
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
+
+# Sway appearance customization
+
+# clas                   border  backgr. text   indicator child_border
+client.focused          #609b57 #609b57 #fdf6e3 #60B5D1
+client.focused_inactive #767f74 #767f74 #eee8d5 #073642
+client.unfocused        #1f1f1f #323232 #93a1a1 #586e75
+client.urgent           #609b57 #609b57 #fdf6e3 #609b57
+
 
 ### Key bindings
 #
@@ -80,11 +100,15 @@ output HDMI-A-1 resolution 1920x1080 position 1920,0
     # mouse button for dragging.
     floating_modifier $mod normal
 
-    # Reload the configuration file
-    bindsym $mod+Shift+c reload
+    # Reload sway
+    bindsym $mod+Shift+c exec sway -C 2>&1 | grep -E 'Error on line [0-9]+' > ~/.cache/sway_config_errors.log && swaynag -m 'You have an error in your sway config file!' -b 'Edit config file' 'editor ~/.config/sway/config' -l < ~/.cache/sway_config_errors.log || sway reload 
 
     # Exit sway (logs you out of your Wayland session)
     bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+
+    # Shutdown
+    bindsym $mod+Shift+Escape exec shutdown now
+
 #
 # Moving around:
 #
@@ -198,10 +222,31 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-#
+# Experimental stuff
+
+# Execute wob - wayland overlay bar 
+exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
+
+# Sound control
+bindsym XF86AudioRaiseVolume exec amixer sset Master 5%+ | sed -En 's/.*\[([0-9]+)%\].*/\1/p' | head -1 > $SWAYSOCK.wob
+bindsym XF86AudioLowerVolume exec amixer sset Master 5%- | sed -En 's/.*\[([0-9]+)%\].*/\1/p' | head -1 > $SWAYSOCK.wob
+bindsym XF86AudioMute exec amixer sset Master toggle | sed -En '/\[on\]/ s/.*\[([0-9]+)%\].*/\1/ p; /\[off\]/ s/.*/0/p' | head -1 > $SWAYSOCK.wob
+
+bindsym --locked XF86AudioMicMute exec amixer set Capture toggle
+
+#Backlight control
+bindsym XF86MonBrightnessUp exec light -A 5 && light -G | cut -d'.' -f1 > $SWAYSOCK.wob
+bindsym XF86MonBrightnessDown exec light -U 5 && light -G | cut -d'.' -f1 > $SWAYSOCK.wob
+
+
+
+
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
+
+# Replaces swaybar with waybar
+
 bar {
       swaybar_command waybar
 }
