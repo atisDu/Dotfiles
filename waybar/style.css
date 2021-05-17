@@ -30,6 +30,7 @@
         color: white;
         background-color: red;
     }
+
 }
 
 
@@ -78,14 +79,17 @@
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     animation-direction: alternate;
+    border-bottom: 2px solid #fabd2f;
 }
 
 #battery.warning {
     color: orange;
+    border-bottom: 2px solid orange;
 }
 
 #battery.critical {
     color: red;
+    border-bottom: 2px solid red;
 }
 
 #battery.warning.discharging {
@@ -100,10 +104,11 @@
 
 #clock {
     font-weight: bold;
+    border-bottom: 2px solid #8ec07c;
 }
 
 #cpu {
-  /* No styles */
+   border-bottom: 3px solid #b8bb26;
 }
 
 #cpu.warning {
@@ -118,16 +123,19 @@
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     animation-direction: alternate;
+    border-bottom: 3px solid #fe8019;
 }
 
 #memory.warning {
     color: orange;
+    border-bottom: 3px solid orange;
 }
 
 #memory.critical {
     color: red;
     animation-name: blink-critical;
     animation-duration: 2s;
+    border-bottom: 3px solid red;
 }
 
 #mode {
@@ -138,19 +146,20 @@
 }
 
 #network {
-    /* No styles */
+    border-bottom: 3px solid #458588;
 }
 
 #network.disconnected {
     color: orange;
+    border-bottom: 3px solid orange;
 }
 
 #pulseaudio {
-    /* No styles */
+    border-bottom: 3px solid #a3be8c;
 }
 
 #pulseaudio.muted {
-    /* No styles */
+    border-bottom: 3px solid #bf616a;
 }
 
 #custom-spotify {
@@ -158,21 +167,27 @@
 }
 
 #temperature {
-    /* No styles */
+    border-bottom: 3px solid #ebcb8b;
 }
 
 #temperature.critical {
     color: red;
+    border-bottom: 3px solid red;
 }
 
 #tray {
-    /* No styles */
+    border-bottom: 3px solid #5e81ac;
 }
 
 #window {
     margin-left: 32px;
     margin-right: 32px;
     font-weight: bold;
+}
+
+#custom-keyboard-layout {
+   border-bottom: 2px solid #5e81ac;
+
 }
 
 #workspaces button {
@@ -191,12 +206,11 @@
 }
 
 #workspaces button.focused {
-    border-color: #4d7c46;
-    color: white;
-    background-color: #609b57;
+    border-bottom: 3px solid  #8fbcbb;
+    color: #8fbcbb;
 }
 
 #workspaces button.urgent {
-    border-color: #c9545d;
+    border-bottom: 2px solid #c9545d;
     color: #c9545d;
-}
+} 

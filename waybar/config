@@ -35,14 +35,15 @@
         "clock#time",
         "tray",
         "clock#date",
-        "battery"
+        "battery",
     ],
 
 
     // -------------------------------------------------------------------------
     // Modules
     // -------------------------------------------------------------------------
-
+	
+		
     "battery": {
         "interval": 10,
         "states": {
@@ -117,8 +118,8 @@
         "format-muted": "  Muted", // Icon: volume-mute
         "format-icons": {
             "headphones": "", // Icon: headphones
-            "handsfree": "", // Icon: headset
-            "headset": "", // Icon: headset
+            "handsfree": "", // Icon: headset
+            "headset": "", // Icon: headset
             "phone": "", // Icon: phone
             "portable": "", // Icon: phone
             "car": "", // Icon: car
@@ -143,14 +144,6 @@
         "disable-scroll": true,
         "format": "{icon} {name}",
         "format-icons": {
-            "1:WWW": "", // Icon: firefox-browser
-            "2:Mail": "", // Icon: mail
-            "3:Editor": "", // Icon: code
-            "4:Terminals": "", // Icon: terminal
-            "8:Documents": "", // Icon: book
-            "9:Multimedia": "", // Icon: play-circle
-            "10:Torrent": "", // Icon: cloud-download-alt
-            "urgent": "",
             "focused": "",
             "default": ""
         }

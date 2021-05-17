@@ -15,7 +15,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term alacritty -e fish
+set $term alacritty 
 
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
@@ -25,7 +25,6 @@ set $menu wofi --show drun
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /home/atis/Video/wall.jpg fill 
 
 #/usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 #
@@ -76,7 +75,7 @@ input * {
 # Sway appearance customization
 
 # clas                   border  backgr. text   indicator child_border
-client.focused          #609b57 #609b57 #fdf6e3 #60B5D1
+client.focused          #8fbcbb #8fbcbb #ffffff #8fbcbb
 client.focused_inactive #767f74 #767f74 #eee8d5 #073642
 client.unfocused        #1f1f1f #323232 #93a1a1 #586e75
 client.urgent           #609b57 #609b57 #fdf6e3 #609b57
@@ -230,16 +229,27 @@ bindsym $mod+r mode "resize"
 exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
 
 # Sound control
+
 bindsym XF86AudioRaiseVolume exec amixer sset Master 5%+ | sed -En 's/.*\[([0-9]+)%\].*/\1/p' | head -1 > $SWAYSOCK.wob
 bindsym XF86AudioLowerVolume exec amixer sset Master 5%- | sed -En 's/.*\[([0-9]+)%\].*/\1/p' | head -1 > $SWAYSOCK.wob
 bindsym XF86AudioMute exec amixer sset Master toggle | sed -En '/\[on\]/ s/.*\[([0-9]+)%\].*/\1/ p; /\[off\]/ s/.*/0/p' | head -1 > $SWAYSOCK.wob
 
+
 bindsym --locked XF86AudioMicMute exec amixer set Capture toggle
 
 #Backlight control
+
+#bindsym XF86MonBrightnessDown exec brightnessctl set 5%- | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $SWAYSOCK.wob
+#bindsym XF86MonBrightnessUp exec brightnessctl set +5% | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $SWAYSOCK.wob
+
 bindsym XF86MonBrightnessUp exec light -A 5 && light -G | cut -d'.' -f1 > $SWAYSOCK.wob
 bindsym XF86MonBrightnessDown exec light -U 5 && light -G | cut -d'.' -f1 > $SWAYSOCK.wob
 
+#Make some program windows floating
+
+for_window [class="Firefox"] floating enable
+
+for_window [class="Steam"] floating enable
 
 
 
@@ -248,9 +258,17 @@ bindsym XF86MonBrightnessDown exec light -U 5 && light -G | cut -d'.' -f1 > $SWA
 # Read `man 5 sway-bar` for more information about this section.
 
 # Replaces swaybar with waybar
+#bar {
+#    position top
+
+    # When the status_command prints a new line to stdout, swaybar updates.
+    # The default just shows the current date and time.
+    #status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
+
+exec_always blueman-applet
 
 bar {
       swaybar_command waybar
 }
 
-include /etc/sway/config.d/*
+#include /etc/sway/config.d/*
