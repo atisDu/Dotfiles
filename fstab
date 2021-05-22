@@ -1,0 +1,15 @@
+# /dev/nvme0n1p3
+UUID=a585eff6-43c0-4f54-a059-582336038f08	/         	ext4      	rw,relatime	0 1
+
+# /dev/nvme0n1p1
+UUID=92D4-BA52      	/boot     	vfat      	rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro	0 2
+
+# /dev/nvme0n1p4
+UUID=49e09d89-91ca-415e-b423-9703bb44027d	/home     	ext4      	rw,relatime	0 2
+
+# /dev/nvme0n1p2
+UUID=1db29c9d-6e2c-45ec-a8aa-264310d21b23	none      	swap      	defaults  	0 0
+
+# /dev/sda1
+/dev/sda1                          /run/media/atis/Maxtor  ntfs nofail,exec,uid=1000,gid=1000  0 0
+
