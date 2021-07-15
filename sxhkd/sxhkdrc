@@ -4,11 +4,11 @@
 
 # terminal emulator
 super + Return
-	gnome-terminal
+	st
 
 # program launcher
-super + shift + d
-    rofi -show run -config /home/atis/.config/rofi/config.rasi
+super + d
+    rofi -show drun -config /home/atis/.config/rofi/config.rasi
 
 # make sxhkd reload its configuration files:
 super + Escape
