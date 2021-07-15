@@ -38,9 +38,22 @@ super + y
 super + g
 	bspc node -s biggest
 
+#fullscreen screenshot save
+
+super + Print
+     maim "/home/$USER/Attēli/$(date)"
+
+#cropped save
+super + shift + x
+      maim --select "/home/$USER/Attēli/$(date)"
+
+# alternate between the tiled and monocle layout
+super + Tab
+	bspc desktop -l next
+	
 #Open KDE application launcher
-alt + f1
-dbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.activateLauncherMenu
+#alt + f1
+#dbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.activateLauncherMenu
 #
 # state/flags
 #
@@ -122,3 +135,9 @@ super + alt + shift + {h,j,k,l}
 # move a floating window
 super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
+
+XF86MonBrightnessUp
+    xbacklight -inc 10
+
+XF86MonBrightnessDown
+    xbacklight -dec 10
