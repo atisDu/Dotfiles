@@ -112,14 +112,14 @@ client.urgent           #609b57 #609b57 #fdf6e3 #609b57
     # Exit sway (logs you out of your Wayland session)
     bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 
-    # Shutdown
-    bindsym $mod+Shift+Escape exec shutdown now
-
     # Toggle window mode (floating or tiling)
     #bindsym $mod+Shift+space focus floating toggle
 
     # Exec polkit authenticator for gui apps that require root
-    exec /usr/lib/kde4/libexec/polkit-kde-authentication-agent-1
+    exec_always /usr/lib/polkit-kde-authentication-agent-1
+    
+    # Powermenu
+    bindsym $mod+Shift+Escape exec rofi -show power-menu -modi power-menu:./rofi-power-menu
 #
 # Moving around:
 #
@@ -233,49 +233,60 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
+#
 # Experimental stuff
+#
+
+# Take a screenshot with all output and save it into screenshots
+bindsym Print exec grim -t png ~/Attēli/$(date +%Y-%m-%d_%H-%M-%S)
+
+# Take a Screenshot with the region select
+bindsym $mod+Print exec grim -t png -g "$(slurp)" ~/Attēli/$(date +%Y-%m-%d_%H-%M-%S)
+
 
 # Execute wob - wayland overlay bar 
 exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
 
 # Sound control
 
-bindsym XF86AudioRaiseVolume exec amixer sset Master 5%+ | sed -En 's/.*\[([0-9]+)%\].*/\1/p' | head -1 > $SWAYSOCK.wob
-bindsym XF86AudioLowerVolume exec amixer sset Master 5%- | sed -En 's/.*\[([0-9]+)%\].*/\1/p' | head -1 > $SWAYSOCK.wob
-bindsym XF86AudioMute exec amixer sset Master toggle | sed -En '/\[on\]/ s/.*\[([0-9]+)%\].*/\1/ p; /\[off\]/ s/.*/0/p' | head -1 > $SWAYSOCK.wob
-
+bindsym XF86AudioRaiseVolume exec amixer -D pulse sset Master 5%+
+bindsym XF86AudioLowerVolume exec amixer -D pulse sset Master 5%- 
+bindsym XF86AudioMute exec amixer sset Master toggle 
 
 bindsym --locked XF86AudioMicMute exec amixer set Capture toggle
 
-#Backlight control
+# Execute pipewire rnnoise script fro microphone noise reduction
+exec_always /usr/bin/pipewire -c ~/pipewire-noise-r/filter-chain.conf
 
+
+#Backlight control
+exec_always  easyeffects --gapplication-service
+exec /usr/bin/pipewire &
+exec /usr/bin/pipewire-pulse &
+exec /usr/bin/pipewire-media-session
 #bindsym XF86MonBrightnessDown exec brightnessctl set 5%- | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $SWAYSOCK.wob
 #bindsym XF86MonBrightnessUp exec brightnessctl set +5% | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $SWAYSOCK.wob
 
-bindsym XF86MonBrightnessUp exec light -A 5 && light -G | cut -d'.' -f1 > $SWAYSOCK.wob
-bindsym XF86MonBrightnessDown exec light -U 5 && light -G | cut -d'.' -f1 > $SWAYSOCK.wob
-
+bindsym XF86MonBrightnessUp exec blight -d amdgpu_bl0 set +10%
+bindsym XF86MonBrightnessDown exec blight -d amdgpu_bl0 set -10% 
 #Make some program windows floating
 
-for_window [class="Firefox"] floating enable
-
+for_window [class="Firefox"] floating enable 
 for_window [class="Steam"] floating enable
 
-
+for_window [app_id="org.kde.polkit-kde-authentication-agent-1"] floating enable
 
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
 
-# Replaces swaybar with waybar
+#Replaces swaybar with waybar
 #bar {
 #    position top
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
     #status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
-
-exec_always blueman-applet
 
 bar {
       swaybar_command waybar
