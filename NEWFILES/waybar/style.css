@@ -206,8 +206,8 @@
 }
 
 #workspaces button.focused {
-    border-bottom: 3px solid  #8fbcbb;
-    color: #8fbcbb;
+    background: #4c566a;
+    color: white;
 }
 
 #workspaces button.urgent {
