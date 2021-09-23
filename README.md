@@ -2,8 +2,7 @@
 My Dotfiles, this includes i3 config, rofi config and so on. Window manager screenshots, by order from newest to oldest:
 
 dwm config:
-![screen](https://user-images.githubusercontent.com/53487681/134557181-194346db-d32f-4dc5-8f9f-ac023ae1baf4.png)
-
+![screen](https://user-images.githubusercontent.com/53487681/134557517-f5767eb0-f3ca-4ea6-9b04-7690ab420c85.png)
 
 Sway config:
 ![2021-08-20_20-05-46](https://user-images.githubusercontent.com/53487681/130269050-5d5871b0-d3ec-48e7-a8cf-4de8a33f0af8.jpeg)
