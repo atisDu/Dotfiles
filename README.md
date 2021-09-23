@@ -1,5 +1,9 @@
 # Dotfiles
-My Dotfiles, this includes i3 config, rofi config and so on.
+My Dotfiles, this includes i3 config, rofi config and so on. Window manager screenshots, by order from newest to oldest:
+
+dwm config:
+
+
 
 Sway config:
 ![2021-08-20_20-05-46](https://user-images.githubusercontent.com/53487681/130269050-5d5871b0-d3ec-48e7-a8cf-4de8a33f0af8.jpeg)
