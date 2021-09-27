@@ -52,3 +52,4 @@ xf86-input-libinput
 xf86-input-synaptics
 mesa 
 amdvlk
+feh
